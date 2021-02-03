@@ -31,5 +31,5 @@ jobs:
 
     - name: Deploy to AWS CloudFormation
       run: |
-       aws cloudformation create-stack --stack-name myteststack --template-body file://vpc.yaml --parameters ParameterKey=KeyPairName,ParameterValue=TestKey ParameterKey=SubnetIDs,ParameterValue=SubnetID1\\,SubnetID2
+       aws cloudformation create-stack --stack-name myteststack --template-body file://vpc.yaml
     
