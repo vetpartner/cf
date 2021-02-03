@@ -18,6 +18,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: cfn-lint
+      uses: vetparnter/cfn-linkter@dev
+      with:
+        args: "**/*.yaml"
+
     - name: Configure AWS credentials from Production account
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -34,5 +39,5 @@ jobs:
       with: 
        name: Mystack
        template: vpc.yaml
-       parameter-overrides: false
+       
     
