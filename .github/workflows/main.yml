@@ -31,7 +31,7 @@ jobs:
         aws s3 sync . s3://yuanlitest
 
     - name: Deploy to AWS CloudFormation
-      run:  aws cloudformation create-stack --stack-name myteststack1 --template-body file://vpc.yaml
+      run:  aws cloudformation create-stack --stack-name myteststack1 --template-body file://vpc.yaml --parameter S3BucketName='cftestfromgithub' UserName='githubtestaccount' PolicyName='cftests3policy'
 
        
     
