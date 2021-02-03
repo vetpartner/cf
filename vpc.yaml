@@ -162,9 +162,6 @@
                     "id": "b81b1033-9cc0-4248-b807-fb575fd54687"
                 }
             },
-            "DependsOn": [
-                "IAMUser"
-            ]
         },
         "IAMKey": {
             "Type": "AWS::IAM::AccessKey",
