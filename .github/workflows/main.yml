@@ -30,6 +30,9 @@ jobs:
         aws s3 sync . s3://yuanlitest
 
     - name: Deploy to AWS CloudFormation
-      run: |
-       aws cloudformation create-stack --stack-name myteststack --template-body file://vpc.yaml
+      use: aws-actions/aws-cloudformation-github-deploy@v1
+      with: 
+       name: Mystack
+       template: vpc.yaml
+       parameter-overrides: false
     
