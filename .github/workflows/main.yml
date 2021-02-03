@@ -30,9 +30,6 @@ jobs:
         aws s3 sync . s3://yuanlitest
 
     - name: Deploy to AWS CloudFormation
-      uses: aws-actions/aws-cloudformation-github-deploy@v1
-      with:
-       name: MyStack
-       template: vpc.yaml
-       parameter-overrides: false
+      run: |
+       aws cloudformation create-stack --stack-name myteststack --template-body file://vpc.yaml --parameters ParameterKey=KeyPairName,ParameterValue=TestKey ParameterKey=SubnetIDs,ParameterValue=SubnetID1\\,SubnetID2
     
