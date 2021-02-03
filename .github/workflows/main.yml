@@ -21,7 +21,7 @@ jobs:
     - name: Check cloudformation yaml file
       uses: scottbrenner/cfn-lint-action@master
       with:
-        args: "vetpartner/*.yaml"
+        args: "*.yaml"
   
     - name: Configure AWS credentials from Production account
       uses: aws-actions/configure-aws-credentials@v1
