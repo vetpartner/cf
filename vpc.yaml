@@ -1,0 +1,220 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "5f48a1ce-1a7b-44e3-b9b6-b83719bded79": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 510,
+                    "y": 120
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "e0e4e707-9bea-46b5-ab39-588be81cb5e3": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -20,
+                    "y": 110
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "b81b1033-9cc0-4248-b807-fb575fd54687": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 160,
+                    "y": 240
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "e0e4e707-9bea-46b5-ab39-588be81cb5e3"
+                ]
+            },
+            "83bda625-f2d4-4de1-8b66-d475476308ed": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": -90,
+                    "y": 210
+                },
+                "z": 0,
+                "embeds": []
+            }
+        }
+    },
+    "Resources": {
+        "IAMUser": {
+            "Type": "AWS::IAM::User",
+            "Properties": {
+                "UserName": {
+                    "Ref": "UserName"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "e0e4e707-9bea-46b5-ab39-588be81cb5e3"
+                }
+            }
+        },
+        "Bucket": {
+            "Type": "AWS::S3::Bucket",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+                "BucketName": {
+                    "Ref": "S3BucketName"
+                },
+                "LifecycleConfiguration": {
+                    "Rules": [
+                        {
+                            "ExpirationInDays": 100,
+                            "Id": "deleteRule",
+                            "Prefix": "",
+                            "Status": "Enabled"
+                        }
+                    ]
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "5f48a1ce-1a7b-44e3-b9b6-b83719bded79"
+                }
+            }
+        },
+        "IAMPolicy": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "Users": [
+                    {
+                        "Ref": "IAMUser"
+                    }
+                ],
+                "PolicyName": "Test",
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "VisualEditor0",
+                            "Effect": "Allow",
+                            "Action": "s3:ListBucket",
+                            "Resource": {
+                                "Fn::Join": [
+                                    ":",
+                                    [
+                                        "arn:aws:s3::",
+                                        {
+                                            "Ref": "Bucket"
+                                        }
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            "Sid": "VisualEditor1",
+                            "Effect": "Allow",
+                            "Action": [
+                                "s3:ListAllMyBuckets",
+                                "s3:HeadBucket"
+                            ],
+                            "Resource": "*"
+                        },
+                        {
+                            "Sid": "VisualEditor2",
+                            "Effect": "Allow",
+                            "Action": "s3:*",
+                            "Resource": {
+                                "Fn::Join": [
+                                    "/",
+                                    [
+                                        {
+                                            "Fn::Join": [
+                                                ":",
+                                                [
+                                                    "arn:aws:s3::",
+                                                    {
+                                                        "Ref": "Bucket"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        "*"
+                                    ]
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "b81b1033-9cc0-4248-b807-fb575fd54687"
+                }
+            },
+            "DependsOn": [
+                "IAMUser"
+            ]
+        },
+        "IAMKey": {
+            "Type": "AWS::IAM::AccessKey",
+            "Properties": {
+                "UserName": {
+                    "Ref": "IAMUser"
+                }
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "83bda625-f2d4-4de1-8b66-d475476308ed"
+                }
+            },
+            "DependsOn": [
+                "IAMUser"
+            ]
+        }
+    },
+    "Parameters": {
+        "S3BucketName": {
+            "Type": "String"
+        },
+        "UserName": {
+            "Type": "String"
+        },
+        "PolicyName": {
+            "Type": "String"
+        }
+    },
+    "Outputs": {
+        "BucketName": {
+            "Value": {
+                "Ref": "Bucket"
+            },
+            "Description": "S3 Bucket Name"
+        },
+        "SecretAccessKey": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "IAMKey",
+                    "SecretAccessKey"
+                ]
+            },
+            "Description": "Secret Access Key"
+        },
+        "AccessKeyID": {
+            "Value": {
+                "Ref": "IAMKey"
+            },
+            "Description": "Access ID"
+        }
+    }
+}
