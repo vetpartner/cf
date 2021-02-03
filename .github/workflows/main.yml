@@ -18,8 +18,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     
-    - name: Check cloudformation yaml syntax
-      uses: alpine-docker/cfn-linter@eddiez0719-patch-1
+    - name: Check cloudformation yaml file
+      uses: scottbrenner/cfn-lint-action@master
+      with:
+        args: "vetpartner/*.yaml"
   
     - name: Configure AWS credentials from Production account
       uses: aws-actions/configure-aws-credentials@v1
@@ -33,4 +35,4 @@ jobs:
         aws s3 sync . s3://yuanlitest
 
     - name: Deploy to AWS CloudFormation
-      run:  aws cloudformation create-stack --stack-name myteststack1 --template-body file://vpc.yaml --parameter ParameterKey=S3BucketName,ParameterValue=githubtestcicds3bucket ParameterKey=UserName,ParameterValue=githubuser ParameterKey=PolicyName,ParameterValue=githubtests3bucket --capabilities CAPABILITY_NAMED_IAM  
+      run:  aws cloudformation create-stack --stack-name myteststack2 --template-body file://vpc.yaml --parameter ParameterKey=S3BucketName,ParameterValue=githubtestcicds3bucket ParameterKey=UserName,ParameterValue=githubuser ParameterKey=PolicyName,ParameterValue=githubtests3bucket --capabilities CAPABILITY_NAMED_IAM  
