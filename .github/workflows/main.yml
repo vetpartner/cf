@@ -17,7 +17,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
+    
+    - name: Check cloudformation yaml syntax
+      uses: alpine-docker/cfn-linter@eddiez0719-patch-1
   
     - name: Configure AWS credentials from Production account
       uses: aws-actions/configure-aws-credentials@v1
