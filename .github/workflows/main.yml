@@ -30,7 +30,7 @@ jobs:
         aws s3 sync . s3://yuanlitest
 
     - name: Deploy to AWS CloudFormation
-      use: aws-actions/aws-cloudformation-github-deploy@v1
+      uses: aws-actions/aws-cloudformation-github-deploy@v1
       with: 
        name: Mystack
        template: vpc.yaml
