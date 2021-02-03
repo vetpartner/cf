@@ -28,3 +28,10 @@ jobs:
     - name: Copy files to the production website with the AWS CLI
       run: |
         aws s3 sync . s3://yuanlitest
+
+    - name: Deploy to AWS Cloudformation
+      uses: aws-actions/aws-cloudformation-github-deploy@v1
+      with:
+        name: Mystack
+        template: vpc.yaml
+        
