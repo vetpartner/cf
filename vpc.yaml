@@ -101,7 +101,7 @@
                         "Ref": "IAMUser"
                     }
                 ],
-                "PolicyName": "Test",
+                "PolicyName": {"Ref":"PolicyName"},
                 "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
@@ -175,9 +175,6 @@
                     "id": "83bda625-f2d4-4de1-8b66-d475476308ed"
                 }
             },
-            "DependsOn": [
-                "IAMUser"
-            ]
         }
     },
     "Parameters": {
