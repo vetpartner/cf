@@ -35,4 +35,4 @@ jobs:
         aws s3 sync . s3://yuanlitest
 
     - name: Deploy to AWS CloudFormation
-      run:  aws cloudformation create-stack --stack-name myteststack2 --template-body file://vpc.yaml --parameter ParameterKey=S3BucketName,ParameterValue=githubtestcicds3bucket ParameterKey=UserName,ParameterValue=githubuser ParameterKey=PolicyName,ParameterValue=githubtests3bucket --capabilities CAPABILITY_NAMED_IAM  
+      run:  aws cloudformation create-stack --stack-name myteststack2 --template-body file://vpc.yaml --parameter ParameterKey=S3BucketName,ParameterValue=githubtestcicds3bucket1 ParameterKey=UserName,ParameterValue=githubuser1 ParameterKey=PolicyName,ParameterValue=githubtests3bucket1 --capabilities CAPABILITY_NAMED_IAM  
