@@ -34,4 +34,5 @@ jobs:
       with:
        name: MyStack
        template: vpc.yaml
+       parameter-overrides: false
     
